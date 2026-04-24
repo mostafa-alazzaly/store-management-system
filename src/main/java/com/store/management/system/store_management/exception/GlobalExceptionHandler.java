@@ -87,6 +87,30 @@ public class GlobalExceptionHandler {
         return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
     }
 
+    @ExceptionHandler(UserAlreadyAssignedToEmployeeException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyAssignedToEmployee(UserAlreadyAssignedToEmployeeException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEmployeeNotFound(EmployeeNotFoundException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvalidAccountTypeException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidAccountType(InvalidAccountTypeException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(UserAlreadyAssignedToCustomerException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyAssignedToCustomer(UserAlreadyAssignedToCustomerException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCustomerNotFound(CustomerNotFoundException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+
     private ResponseEntity<ErrorResponse> buildErrorResponse (Exception exc ,HttpStatus status ,String massage , HttpServletRequest request){
      ErrorResponse errorResponse = new ErrorResponse();
      errorResponse.setTimestamp(LocalDateTime.now());

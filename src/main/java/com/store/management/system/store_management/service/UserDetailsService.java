@@ -5,18 +5,17 @@ import com.store.management.system.store_management.model.UserPrincipal;
 import com.store.management.system.store_management.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
     @Service
-    public class userDetailsService implements UserDetailsService {
+    public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
 
         private  UserRepo userRepo;
 
         @Autowired
-        public userDetailsService(UserRepo userRepo) {
+        public UserDetailsService(UserRepo userRepo) {
             this.userRepo = userRepo;
         }
 
@@ -30,6 +29,11 @@ import org.springframework.stereotype.Service;
                     System.out.println("user not found");
                     throw new UsernameNotFoundException("Username not found");
                 }
+
+            System.out.println("username from db = " + user.getUsername());
+            System.out.println("enabled from entity = " + user.isEnabled());
+            System.out.println("accountNonLocked from entity = " + user.isAccountNonLocked());
+            System.out.println("password from entity = " + user.getPassword());
                 
             return new UserPrincipal(user);
         }

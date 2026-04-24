@@ -20,16 +20,29 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private  final UserDetailsService userDetailsService;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint ;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
+                          CustomAccessDeniedHandler customAccessDeniedHandler) {
         this.userDetailsService = userDetailsService;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterchain(HttpSecurity http)  {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)  {
 
         return http
+
+                    .exceptionHandling(exception->exception
+                                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                                .accessDeniedHandler(customAccessDeniedHandler))
+
+                    .httpBasic(httpBasic -> httpBasic
+                        .authenticationEntryPoint(customAuthenticationEntryPoint))
 
                     .authorizeHttpRequests(request ->
                             request
@@ -53,7 +66,7 @@ public class SecurityConfig {
                                     .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole("ADMIN")
 
                                     // Categories
-                                    .requestMatchers(HttpMethod.GET,"/api//categories","/api/categories/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.GET,"/api/categories","/api/categories/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/categories").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.PUT,"/api/categories/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/categories/**").hasRole("ADMIN")
@@ -66,14 +79,14 @@ public class SecurityConfig {
 
                                     //Customers
                                     .requestMatchers(HttpMethod.GET,"/api/customers","/api/customers/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.POST,"/api/customers").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/customers/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.POST,"/api/customers").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/customers/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/customers/**").hasRole("ADMIN")
 
                                     // Employees
                                     .requestMatchers(HttpMethod.GET,"/api/employees","/api/employees/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.POST,"/api/employees").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.PUT,"/api/employees/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/employees/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/employees/**").hasRole("ADMIN")
 
                                     // Invoices
