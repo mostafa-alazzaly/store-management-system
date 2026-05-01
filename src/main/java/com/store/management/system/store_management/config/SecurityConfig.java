@@ -48,7 +48,7 @@ public class SecurityConfig {
                             request
                                     // Customer SELF Endpoints
                                     .requestMatchers(HttpMethod.GET,"/api/me/profile").hasRole("CUSTOMER")
-                                    .requestMatchers(HttpMethod.PUT,"/api/me/profile").hasRole("CUSTOMER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/me/profile").hasRole("CUSTOMER")
 
                                     .requestMatchers(HttpMethod.GET,"/api/me/products").hasRole("CUSTOMER")
                                     .requestMatchers(HttpMethod.GET,"/api/me/products/**").hasRole("CUSTOMER")
@@ -60,21 +60,31 @@ public class SecurityConfig {
                                     .requestMatchers(HttpMethod.GET,"/api/me/payments/**").hasRole("CUSTOMER")
 
                                     // Product
-                                    .requestMatchers(HttpMethod.GET,"/api/products","/api/products/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE","CUSTOMER")
-                                    .requestMatchers(HttpMethod.POST,"/api/products").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.PUT,"/api/products/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.GET,"/api/products/all").hasRole("ADMIN")
+                                    .requestMatchers(HttpMethod.GET,"/api/products","/api/products/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.POST,"/api/products").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/products/{id}/deactivate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/products/{id}/activate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/products/{id}/barcode").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/products/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole("ADMIN")
 
                                     // Categories
+                                    .requestMatchers(HttpMethod.GET,"/api/categories/all").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.GET,"/api/categories","/api/categories/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/categories").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.PUT,"/api/categories/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/categories/{id}/deactivate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/categories/{id}/activate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/categories/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/categories/**").hasRole("ADMIN")
 
                                     // Suppliers
+                                    .requestMatchers(HttpMethod.GET, "/api/suppliers/all").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.GET,"/api/suppliers","/api/suppliers/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/suppliers").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.PUT,"/api/suppliers/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/suppliers/{id}/deactivate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/suppliers/{id}/activate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/suppliers/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/suppliers/**").hasRole("ADMIN")
 
                                     //Customers
@@ -92,31 +102,31 @@ public class SecurityConfig {
                                     // Invoices
                                     .requestMatchers(HttpMethod.GET,"/api/invoices","/api/invoices/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/invoices").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/invoices/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/invoices/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/invoices/**").hasRole("ADMIN")
 
                                     // Invoice Items
                                     .requestMatchers(HttpMethod.GET,"/api/invoice-items","/api/invoice-items/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/invoice-items").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/invoice-items/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/invoice-items/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/invoice-items/**").hasRole("ADMIN")
 
                                     //  Payments
                                     .requestMatchers(HttpMethod.GET,"/api/payments","/api/payments/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/payments").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/payments/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/payments/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/payments/**").hasRole("ADMIN")
 
                                     //  Inventory Transactions
                                     .requestMatchers(HttpMethod.GET,"/api/inventory-transactions","/api/inventory-transactions/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/inventory-transactions").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/inventory-transactions/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/inventory-transactions/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/inventory-transactions/**").hasRole("ADMIN")
 
                                     //  Inventory Transaction Items
                                     .requestMatchers(HttpMethod.GET,"/api/inventory-transaction-items","/api/inventory-transaction-items/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/inventory-transaction-items").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PUT,"/api/inventory-transaction-items/**").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/inventory-transaction-items/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.DELETE,"/api/inventory-transaction-items/**").hasRole("ADMIN")
 
                                     // Roles
@@ -128,8 +138,17 @@ public class SecurityConfig {
                                     // Users
                                     .requestMatchers(HttpMethod.GET,"/api/users","/api/users/**").hasAnyRole("ADMIN","MANAGER")
                                     .requestMatchers(HttpMethod.POST,"/api/users").hasRole("ADMIN")
-                                    .requestMatchers(HttpMethod.PUT,"/api/users/**").hasRole("ADMIN")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/users/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.DELETE,"/api/users/**").hasRole("ADMIN")
+
+                                    // Product Suppliers
+                                    .requestMatchers(HttpMethod.GET,"/api/product-suppliers/all").hasRole("ADMIN")
+                                    .requestMatchers(HttpMethod.GET, "/api/product-suppliers", "/api/product-suppliers/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.POST, "/api/product-suppliers").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/product-suppliers/{id}/deactivate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH,"/api/product-suppliers/{id}/activate").hasAnyRole("ADMIN","MANAGER")
+                                    .requestMatchers(HttpMethod.PATCH, "/api/product-suppliers/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
+                                    .requestMatchers(HttpMethod.DELETE, "/api/product-suppliers/**").hasRole("ADMIN")
                                     .anyRequest().authenticated())
 
                     .httpBasic(Customizer.withDefaults())
