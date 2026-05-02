@@ -232,6 +232,51 @@ public class GlobalExceptionHandler {
         return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
     }
 
+    @ExceptionHandler(SupplierIdRequiredForInTransactionException.class)
+    public ResponseEntity<ErrorResponse> handSupplierIdRequiredForInTransaction(SupplierIdRequiredForInTransactionException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(SupplierIdOnlyRequiredForInOrSupplierReturnException.class)
+    public ResponseEntity<ErrorResponse> handSupplierIdOnlyRequiredForInTransaction(SupplierIdOnlyRequiredForInOrSupplierReturnException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InventoryTransactionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleInventoryTransactionNotFound(InventoryTransactionNotFoundException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(QuantityMustBePositiveException.class)
+    public ResponseEntity<ErrorResponse> handleQuantityMustBePositiveException(QuantityMustBePositiveException exc , HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(NotEnoughStockQuantityException.class)
+    public ResponseEntity<ErrorResponse> handleNotEnoughStockQuantityException(NotEnoughStockQuantityException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InventoryTransactionItemNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleInventoryTransactionItemNotFound(InventoryTransactionItemNotFoundException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(AdjustmentQuantityCannotBeZeroException.class)
+    public ResponseEntity<ErrorResponse> handAdjustmentQuantityCannotBeZeroException(AdjustmentQuantityCannotBeZeroException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InventoryTransactionAlreadyReversedException.class)
+    public ResponseEntity<ErrorResponse> handleInventoryTransactionAlreadyReversed(InventoryTransactionAlreadyReversedException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(CannotReverseReversedTransactionException.class)
+    public ResponseEntity<ErrorResponse> handleCannotReverseReversedTransactionException(CannotReverseReversedTransactionException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
     private ResponseEntity<ErrorResponse> buildErrorResponse (Exception exc ,HttpStatus status ,String massage , HttpServletRequest request){
      ErrorResponse errorResponse = new ErrorResponse();
      errorResponse.setTimestamp(LocalDateTime.now());

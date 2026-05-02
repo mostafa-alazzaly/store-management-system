@@ -1,8 +1,8 @@
 package com.store.management.system.store_management.controller;
 
-import com.store.management.system.store_management.dto.CreateCustomerRequest;
-import com.store.management.system.store_management.dto.CustomerResponse;
-import com.store.management.system.store_management.dto.UpdateCustomerRequest;
+import com.store.management.system.store_management.dto.customer.request.CreateCustomerRequest;
+import com.store.management.system.store_management.dto.customer.response.CustomerResponse;
+import com.store.management.system.store_management.dto.customer.request.UpdateCustomerRequest;
 import com.store.management.system.store_management.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

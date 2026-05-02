@@ -1,7 +1,7 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateRoleRequest;
-import com.store.management.system.store_management.dto.UpdateRoleRequest;
+import com.store.management.system.store_management.dto.role.CreateRoleRequest;
+import com.store.management.system.store_management.dto.role.UpdateRoleRequest;
 import com.store.management.system.store_management.entity.Role;
 import com.store.management.system.store_management.exception.RoleAlreadyExistsException;
 import com.store.management.system.store_management.exception.RoleNotFoundException;

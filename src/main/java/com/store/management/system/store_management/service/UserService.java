@@ -1,7 +1,7 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateUserRequest;
-import com.store.management.system.store_management.dto.UpdateUserRequest;
+import com.store.management.system.store_management.dto.user.CreateUserRequest;
+import com.store.management.system.store_management.dto.user.UpdateUserRequest;
 import com.store.management.system.store_management.entity.Role;
 import com.store.management.system.store_management.entity.User;
 import com.store.management.system.store_management.exception.*;

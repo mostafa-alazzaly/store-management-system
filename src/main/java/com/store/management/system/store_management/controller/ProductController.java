@@ -1,15 +1,15 @@
 package com.store.management.system.store_management.controller;
 
-import com.store.management.system.store_management.dto.CreateProductRequest;
-import com.store.management.system.store_management.dto.ProductResponse;
-import com.store.management.system.store_management.dto.UpdateProductBarcodeRequest;
-import com.store.management.system.store_management.dto.UpdateProductRequest;
+import com.store.management.system.store_management.dto.product.request.CreateProductRequest;
+import com.store.management.system.store_management.dto.product.response.ProductResponse;
+import com.store.management.system.store_management.dto.product.request.UpdateProductBarcodeRequest;
+import com.store.management.system.store_management.dto.product.request.UpdateProductRequest;
 import com.store.management.system.store_management.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -22,13 +22,13 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public List<ProductResponse> getAllProducts(){
-        return productService.getAllProducts();
+    public Page<ProductResponse> getAllProducts(Pageable pageable) {
+        return productService.getAllProducts(pageable);
     }
 
     @GetMapping
-    public List<ProductResponse> getAllActiveProducts(){
-        return productService.getAllActiveProducts();
+    public Page<ProductResponse> getAllActiveProducts(Pageable pageable) {
+        return productService.getAllActiveProducts(pageable);
     }
 
     @GetMapping("/{id}")

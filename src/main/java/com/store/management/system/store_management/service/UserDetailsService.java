@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
     public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
 
-        private  UserRepo userRepo;
+        private final UserRepo userRepo;
 
         @Autowired
         public UserDetailsService(UserRepo userRepo) {

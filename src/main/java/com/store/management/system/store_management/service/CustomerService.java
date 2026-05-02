@@ -1,8 +1,8 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateCustomerRequest;
-import com.store.management.system.store_management.dto.CustomerResponse;
-import com.store.management.system.store_management.dto.UpdateCustomerRequest;
+import com.store.management.system.store_management.dto.customer.request.CreateCustomerRequest;
+import com.store.management.system.store_management.dto.customer.response.CustomerResponse;
+import com.store.management.system.store_management.dto.customer.request.UpdateCustomerRequest;
 import com.store.management.system.store_management.entity.Customer;
 import com.store.management.system.store_management.entity.User;
 import com.store.management.system.store_management.exception.*;

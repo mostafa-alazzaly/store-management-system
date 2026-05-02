@@ -1,14 +1,16 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CategoryResponse;
-import com.store.management.system.store_management.dto.CreateCategoryRequest;
-import com.store.management.system.store_management.dto.UpdateCategoryRequest;
+import com.store.management.system.store_management.dto.category.response.CategoryResponse;
+import com.store.management.system.store_management.dto.category.request.CreateCategoryRequest;
+import com.store.management.system.store_management.dto.category.request.UpdateCategoryRequest;
 import com.store.management.system.store_management.entity.Category;
 import com.store.management.system.store_management.entity.Product;
 import com.store.management.system.store_management.exception.*;
 import com.store.management.system.store_management.repo.CategoryRepo;
 import com.store.management.system.store_management.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,18 +44,14 @@ public class CategoryService {
          }
          return categoryResponse;
      }
-     public List<CategoryResponse> getAllCategories(){
-         return categoryRepo.findAll()
-                 .stream()
-                 .map(this::mapToResponse)
-                 .toList();
+     public Page<CategoryResponse> getAllCategories(Pageable pageable) {
+         return categoryRepo.findAll(pageable)
+                 .map(this::mapToResponse);
      }
 
-     public List<CategoryResponse> getAllActiveCategories(){
-         return categoryRepo.findCategoryByStatus(Category.Status.ACTIVE)
-                 .stream()
-                 .map(this::mapToResponse)
-                 .toList();
+     public Page<CategoryResponse> getAllActiveCategories(Pageable pageable){
+         return categoryRepo.findCategoryByStatus(Category.Status.ACTIVE , pageable)
+                 .map(this::mapToResponse);
      }
 
      public CategoryResponse getCategoryById(Integer id){

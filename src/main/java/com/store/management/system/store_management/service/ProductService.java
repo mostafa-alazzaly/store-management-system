@@ -1,9 +1,9 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateProductRequest;
-import com.store.management.system.store_management.dto.ProductResponse;
-import com.store.management.system.store_management.dto.UpdateProductBarcodeRequest;
-import com.store.management.system.store_management.dto.UpdateProductRequest;
+import com.store.management.system.store_management.dto.product.request.CreateProductRequest;
+import com.store.management.system.store_management.dto.product.response.ProductResponse;
+import com.store.management.system.store_management.dto.product.request.UpdateProductBarcodeRequest;
+import com.store.management.system.store_management.dto.product.request.UpdateProductRequest;
 import com.store.management.system.store_management.entity.Category;
 import com.store.management.system.store_management.entity.Product;
 import com.store.management.system.store_management.entity.ProductSupplier;
@@ -12,12 +12,12 @@ import com.store.management.system.store_management.repo.CategoryRepo;
 import com.store.management.system.store_management.repo.ProductRepo;
 import com.store.management.system.store_management.repo.ProductSupplierRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ProductService {
@@ -54,19 +54,14 @@ public class ProductService {
         return productResponse;
     }
 
-    public List<ProductResponse> getAllProducts() {
-        return productRepo.findAll()
-                .stream()
-                .map(this::maptoProductResponse)
-                .toList();
-
+    public Page<ProductResponse> getAllProducts(Pageable pageable) {
+        return productRepo.findAll(pageable)
+                .map(this::maptoProductResponse);
     }
 
-    public List<ProductResponse> getAllActiveProducts(){
-        return productRepo.findByStatus(Product.Status.ACTIVE)
-                .stream()
-                .map(this::maptoProductResponse)
-                .toList();
+    public Page<ProductResponse> getAllActiveProducts(Pageable pageable) {
+        return productRepo.findByStatus(Product.Status.ACTIVE,pageable)
+                .map(this::maptoProductResponse);
     }
 
 

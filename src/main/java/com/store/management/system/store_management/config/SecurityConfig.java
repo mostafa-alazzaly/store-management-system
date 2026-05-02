@@ -120,14 +120,10 @@ public class SecurityConfig {
                                     //  Inventory Transactions
                                     .requestMatchers(HttpMethod.GET,"/api/inventory-transactions","/api/inventory-transactions/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
                                     .requestMatchers(HttpMethod.POST,"/api/inventory-transactions").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PATCH,"/api/inventory-transactions/**").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.DELETE,"/api/inventory-transactions/**").hasRole("ADMIN")
+                                    .requestMatchers(HttpMethod.POST,"/api/inventory-transactions/{id}/reverse").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
 
                                     //  Inventory Transaction Items
                                     .requestMatchers(HttpMethod.GET,"/api/inventory-transaction-items","/api/inventory-transaction-items/**").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.POST,"/api/inventory-transaction-items").hasAnyRole("ADMIN","MANAGER","EMPLOYEE")
-                                    .requestMatchers(HttpMethod.PATCH,"/api/inventory-transaction-items/**").hasAnyRole("ADMIN","MANAGER")
-                                    .requestMatchers(HttpMethod.DELETE,"/api/inventory-transaction-items/**").hasRole("ADMIN")
 
                                     // Roles
                                     .requestMatchers(HttpMethod.GET,"/api/roles","/api/roles/**").hasAnyRole("ADMIN","MANAGER")

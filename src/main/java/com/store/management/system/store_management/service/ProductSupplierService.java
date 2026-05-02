@@ -1,8 +1,8 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateProductSupplierRequest;
-import com.store.management.system.store_management.dto.ProductSupplierResponse;
-import com.store.management.system.store_management.dto.UpdateProductSupplierRequest;
+import com.store.management.system.store_management.dto.productSupplier.request.CreateProductSupplierRequest;
+import com.store.management.system.store_management.dto.productSupplier.response.ProductSupplierResponse;
+import com.store.management.system.store_management.dto.productSupplier.request.UpdateProductSupplierRequest;
 import com.store.management.system.store_management.entity.Product;
 import com.store.management.system.store_management.entity.ProductSupplier;
 import com.store.management.system.store_management.entity.Supplier;
@@ -11,12 +11,12 @@ import com.store.management.system.store_management.repo.ProductRepo;
 import com.store.management.system.store_management.repo.ProductSupplierRepo;
 import com.store.management.system.store_management.repo.SupplierRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ProductSupplierService {
@@ -47,18 +47,14 @@ public class ProductSupplierService {
         productSupplierResponse.setStatus(productSupplier.getStatus());
         return productSupplierResponse;
     }
-    public List<ProductSupplierResponse> findAllProductSuppliers() {
-        return productSupplierRepo.findAll()
-                .stream()
-                .map(this::mapToProductSupplierResponse)
-                .toList();
+    public Page<ProductSupplierResponse> findAllProductSuppliers(Pageable pageable) {
+        return productSupplierRepo.findAll(pageable)
+                .map(this::mapToProductSupplierResponse);
     }
 
-    public List<ProductSupplierResponse> findAllActiveProductSuppliers() {
-        return productSupplierRepo.findByStatus(ProductSupplier.Status.ACTIVE)
-                .stream()
-                .map(this::mapToProductSupplierResponse)
-                .toList();
+    public Page<ProductSupplierResponse> findAllActiveProductSuppliers(Pageable pageable) {
+        return productSupplierRepo.findByStatus(ProductSupplier.Status.ACTIVE, pageable)
+                .map(this::mapToProductSupplierResponse);
     }
 
     public ProductSupplierResponse findProductSupplierById(Integer id) {

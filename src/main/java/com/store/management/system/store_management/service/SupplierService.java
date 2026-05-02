@@ -1,19 +1,19 @@
 package com.store.management.system.store_management.service;
 
-import com.store.management.system.store_management.dto.CreateSupplierRequest;
-import com.store.management.system.store_management.dto.SupplierResponse;
-import com.store.management.system.store_management.dto.UpdateSupplierRequest;
+import com.store.management.system.store_management.dto.supplier.request.CreateSupplierRequest;
+import com.store.management.system.store_management.dto.supplier.response.SupplierResponse;
+import com.store.management.system.store_management.dto.supplier.request.UpdateSupplierRequest;
 import com.store.management.system.store_management.entity.ProductSupplier;
 import com.store.management.system.store_management.entity.Supplier;
 import com.store.management.system.store_management.exception.*;
 import com.store.management.system.store_management.repo.ProductSupplierRepo;
 import com.store.management.system.store_management.repo.SupplierRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class SupplierService {
@@ -44,18 +44,14 @@ public class SupplierService {
         supplierResponse.setStatus(supplier.getStatus());
         return supplierResponse;
     }
-    public List<SupplierResponse> getAllSuppliers(){
-        return supplierRepo.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+    public Page<SupplierResponse> getAllSuppliers(Pageable pageable){
+        return supplierRepo.findAll(pageable)
+                .map(this::mapToResponse);
     }
 
-    public List<SupplierResponse> getActiveSuppliers(){
-        return supplierRepo.findByStatus(Supplier.Status.ACTIVE)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+    public Page<SupplierResponse> getActiveSuppliers(Pageable pageable){
+        return supplierRepo.findByStatus(Supplier.Status.ACTIVE,pageable)
+                .map(this::mapToResponse);
     }
 
     public SupplierResponse getSupplierById(Integer id){

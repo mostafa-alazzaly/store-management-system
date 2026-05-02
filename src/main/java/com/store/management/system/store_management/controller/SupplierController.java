@@ -1,14 +1,14 @@
 package com.store.management.system.store_management.controller;
 
-import com.store.management.system.store_management.dto.CreateSupplierRequest;
-import com.store.management.system.store_management.dto.SupplierResponse;
-import com.store.management.system.store_management.dto.UpdateSupplierRequest;
+import com.store.management.system.store_management.dto.supplier.request.CreateSupplierRequest;
+import com.store.management.system.store_management.dto.supplier.response.SupplierResponse;
+import com.store.management.system.store_management.dto.supplier.request.UpdateSupplierRequest;
 import com.store.management.system.store_management.service.SupplierService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/suppliers")
@@ -19,14 +19,15 @@ public class SupplierController {
     public SupplierController(SupplierService supplierService){
         this.supplierService = supplierService;
     }
+
     @GetMapping("/all")
-    public List<SupplierResponse> getSuppliers(){
-        return supplierService.getAllSuppliers() ;
+    public Page<SupplierResponse> getSuppliers(Pageable pageable){
+        return supplierService.getAllSuppliers(pageable) ;
     }
 
     @GetMapping
-    public List<SupplierResponse> getActiveSuppliers(){
-        return supplierService.getActiveSuppliers();
+    public Page<SupplierResponse> getActiveSuppliers(Pageable pageable){
+        return supplierService.getActiveSuppliers(pageable);
     }
 
     @GetMapping("/{id}")

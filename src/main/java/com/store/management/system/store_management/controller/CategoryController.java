@@ -1,14 +1,15 @@
 package com.store.management.system.store_management.controller;
 
-import com.store.management.system.store_management.dto.CategoryResponse;
-import com.store.management.system.store_management.dto.CreateCategoryRequest;
-import com.store.management.system.store_management.dto.UpdateCategoryRequest;
+import com.store.management.system.store_management.dto.category.response.CategoryResponse;
+import com.store.management.system.store_management.dto.category.request.CreateCategoryRequest;
+import com.store.management.system.store_management.dto.category.request.UpdateCategoryRequest;
 import com.store.management.system.store_management.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -21,12 +22,13 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public List<CategoryResponse> getAllCategories(){
-        return  categoryService.getAllCategories();
+    public Page<CategoryResponse> getAllCategories(Pageable pageable){
+        return  categoryService.getAllCategories(pageable);
     }
+
     @GetMapping
-    public List<CategoryResponse> getAllActiveCategories(){
-        return  categoryService.getAllActiveCategories();
+    public Page<CategoryResponse> getAllActiveCategories(Pageable pageable){
+        return  categoryService.getAllActiveCategories(pageable);
     }
 
     @GetMapping("/{id}")

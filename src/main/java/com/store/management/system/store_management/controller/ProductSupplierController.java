@@ -1,13 +1,13 @@
 package com.store.management.system.store_management.controller;
 
-import com.store.management.system.store_management.dto.CreateProductSupplierRequest;
-import com.store.management.system.store_management.dto.ProductSupplierResponse;
-import com.store.management.system.store_management.dto.UpdateProductSupplierRequest;
+import com.store.management.system.store_management.dto.productSupplier.request.CreateProductSupplierRequest;
+import com.store.management.system.store_management.dto.productSupplier.response.ProductSupplierResponse;
+import com.store.management.system.store_management.dto.productSupplier.request.UpdateProductSupplierRequest;
 import com.store.management.system.store_management.service.ProductSupplierService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/product-suppliers")
@@ -18,13 +18,13 @@ public class ProductSupplierController {
         this.productSupplierService = productSupplierService;
     }
     @GetMapping("/all")
-    public List<ProductSupplierResponse> getAllProductSuppliers(){
-        return productSupplierService.findAllProductSuppliers();
+    public Page<ProductSupplierResponse> getAllProductSuppliers(Pageable pageable){
+        return productSupplierService.findAllProductSuppliers(pageable);
     }
 
     @GetMapping
-    public List<ProductSupplierResponse> findAllActiveProductSuppliers(){
-        return productSupplierService.findAllActiveProductSuppliers();
+    public Page<ProductSupplierResponse> findAllActiveProductSuppliers(Pageable pageable){
+        return productSupplierService.findAllActiveProductSuppliers(pageable);
     }
 
     @GetMapping("/{id}")

@@ -1,9 +1,9 @@
 package com.store.management.system.store_management.controller;
 
 
-import com.store.management.system.store_management.dto.CreateEmployeeRequest;
-import com.store.management.system.store_management.dto.EmployeeResponse;
-import com.store.management.system.store_management.dto.UpdateEmployeeRequest;
+import com.store.management.system.store_management.dto.employee.request.CreateEmployeeRequest;
+import com.store.management.system.store_management.dto.employee.response.EmployeeResponse;
+import com.store.management.system.store_management.dto.employee.request.UpdateEmployeeRequest;
 import com.store.management.system.store_management.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
