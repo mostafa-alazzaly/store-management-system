@@ -109,8 +109,8 @@ public class ProductService {
         product.setCategory(category);
         Product savedProduct = productRepo.save(product);
         savedProduct.setProductCode(
-                "PRO-" + String.format("%03d" , savedProduct.getId())
-        );
+                "PRO-" + String.format("%03d" , savedProduct.getId()));
+
         return maptoProductResponse(savedProduct);
     }
 

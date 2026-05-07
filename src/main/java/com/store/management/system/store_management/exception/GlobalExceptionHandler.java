@@ -277,6 +277,102 @@ public class GlobalExceptionHandler {
         return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
     }
 
+    @ExceptionHandler(InvoiceValidationException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceValidationException(InvoiceValidationException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvoiceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceNotFoundException(InvoiceNotFoundException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvoiceIdIsRequiredException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceIdIsRequiredException(InvoiceIdIsRequiredException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvoiceAlreadyPostedException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceAlreadyPostedException(InvoiceAlreadyPostedException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(CannotPostCanceledInvoiceException.class)
+    public ResponseEntity<ErrorResponse> handleCannotPostCanceledInvoiceException(CannotPostCanceledInvoiceException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvalidInvoiceTypeException.class)
+    public  ResponseEntity<ErrorResponse> handleInvalidInvoiceTypeException(InvalidInvoiceTypeException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(InvoiceAlreadyCancelledException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceAlreadyCancelledException(InvoiceAlreadyCancelledException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
+    @ExceptionHandler(OnlyPostedInvoiceCanBeCanceledException.class)
+    public ResponseEntity<ErrorResponse> handleOnlyPostedInvoiceCanceledException(OnlyPostedInvoiceCanBeCanceledException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.FORBIDDEN, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceItemIdRequiredException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceItemIdRequiredException(InvoiceItemIdRequiredException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceItemNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceItemNotFoundException(InvoiceItemNotFoundException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceItemDoesNotBelongToInvoiceException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceItemDoesNotBelongToInvoiceException(InvoiceItemDoesNotBelongToInvoiceException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(OnlyDraftInvoiceCanBeUpdatedException.class)
+    public ResponseEntity<ErrorResponse> handOnlyDraftInvoiceCanBeUpdatedException(OnlyDraftInvoiceCanBeUpdatedException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(OnlyDraftInvoiceCanBeDeleted.class)
+    public ResponseEntity<ErrorResponse> handleOnlyDraftInvoiceCanBeDeleted(OnlyDraftInvoiceCanBeDeleted exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceMustContainAtLeastOneItemException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceMustContainAtLeastOneItemException(InvoiceMustContainAtLeastOneItemException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(PaymentReferenceAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentReferenceAlreadyExistException(PaymentReferenceAlreadyExistException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.CONFLICT, exc.getMessage(), request );
+    }
+    @ExceptionHandler(PaymentReferenceIsRequiredException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentReferenceIsRequiredException(PaymentReferenceIsRequiredException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(OverPaymentException.class)
+    public ResponseEntity<ErrorResponse> handleOverPaymentException(OverPaymentException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(PaidAmountMustBePositiveException.class)
+    public ResponseEntity<ErrorResponse> handlePaidAmountMustBePositiveException(PaidAmountMustBePositiveException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceNotPostedException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceNotPostedException(InvoiceNotPostedException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+    @ExceptionHandler(PaymentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentNotFoundException(PaymentNotFoundException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.NOT_FOUND, exc.getMessage(), request );
+    }
+    @ExceptionHandler(InvoiceHasPaymentsException.class)
+    public ResponseEntity<ErrorResponse> handleInvoiceHasPaymentsException(InvoiceHasPaymentsException exc, HttpServletRequest request) {
+        return buildErrorResponse (exc, HttpStatus.BAD_REQUEST, exc.getMessage(), request );
+    }
+
     private ResponseEntity<ErrorResponse> buildErrorResponse (Exception exc ,HttpStatus status ,String massage , HttpServletRequest request){
      ErrorResponse errorResponse = new ErrorResponse();
      errorResponse.setTimestamp(LocalDateTime.now());

@@ -18,6 +18,10 @@ public class InventoryTransaction {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="invoice_id")
+    private Invoice invoice;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
@@ -68,6 +72,14 @@ public class InventoryTransaction {
     }
 
     public InventoryTransaction() {
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoiceId) {
+        this.invoice = invoiceId;
     }
 
     public InventoryTransaction getOriginalTransaction() {

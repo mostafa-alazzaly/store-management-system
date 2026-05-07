@@ -17,6 +17,7 @@ public class CreateInventoryTransactionRequest {
     private Integer employeeId;
 
     private Integer supplierId;
+    private Integer invoiceId;
 
     @NotNull(message="Transaction Type is required")
     private InventoryTransaction.TransactionType transactionType;
@@ -37,6 +38,14 @@ public class CreateInventoryTransactionRequest {
 
     public void setItems(List<CreateInventoryTransactionItemRequest> items) {
         this.items = items;
+    }
+
+    public Integer getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(Integer invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public CreateInventoryTransactionRequest() {}

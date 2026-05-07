@@ -6,10 +6,7 @@ import com.store.management.system.store_management.dto.inventoryTransaction.req
 import com.store.management.system.store_management.dto.inventoryTransaction.response.InventoryTransactionResponse;
 import com.store.management.system.store_management.entity.*;
 import com.store.management.system.store_management.exception.*;
-import com.store.management.system.store_management.repo.EmployeeRepo;
-import com.store.management.system.store_management.repo.InventoryTransactionRepo;
-import com.store.management.system.store_management.repo.ProductRepo;
-import com.store.management.system.store_management.repo.SupplierRepo;
+import com.store.management.system.store_management.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +25,15 @@ public class InventoryTransactionService {
     private final  EmployeeRepo employeeRepo;
     private final  SupplierRepo supplierRepo;
     private final ProductRepo productRepo;
+    private final InvoiceRepo invoiceRepo;
 
     @Autowired
-    public InventoryTransactionService(InventoryTransactionRepo inventoryTransactionRepo, EmployeeRepo employeeRepo, SupplierRepo supplierRepo, ProductRepo productRepo) {
+    public InventoryTransactionService(InventoryTransactionRepo inventoryTransactionRepo, EmployeeRepo employeeRepo, SupplierRepo supplierRepo, ProductRepo productRepo , InvoiceRepo invoiceRepo) {
         this.inventoryTransactionRepo = inventoryTransactionRepo;
         this.employeeRepo = employeeRepo;
         this.supplierRepo = supplierRepo;
         this.productRepo = productRepo;
+        this.invoiceRepo = invoiceRepo;
     }
 
     private InventoryTransactionResponse mapToResponse (InventoryTransaction invTran){
@@ -43,6 +42,8 @@ public class InventoryTransactionService {
         response.setEmployeeId(invTran.getEmployee().getId());
         response.setSupplierId(
                 invTran.getSupplier() != null ? invTran.getSupplier().getId() : null);
+        response.setInvoiceId(
+                invTran.getInvoice() != null ? invTran.getInvoice().getId() : null);
         response.setTransactionType(invTran.getTransactionType());
         response.setTransactionDate(invTran.getTransactionDate());
         response.setNotes(invTran.getNotes());
@@ -94,6 +95,19 @@ public class InventoryTransactionService {
                         .orElseThrow (()-> new EmployeeNotFoundException("Employee Not Found with id : " + request.getEmployeeId()));
         inventoryTransaction.setEmployee(employee);
 
+        if (InventoryTransaction.TransactionType.IN == request.getTransactionType() ||
+                InventoryTransaction.TransactionType.OUT == request.getTransactionType()){
+
+            if (request.getInvoiceId() == null){
+                throw new InvoiceIdIsRequiredException("Invoice Id is Required for IN or OUT Transaction");
+            }
+
+            Invoice invoice  = invoiceRepo.findById(request.getInvoiceId())
+                    .orElseThrow (()-> new InvoiceNotFoundException("Invoice Not Found with id : " + request.getInvoiceId()));
+            inventoryTransaction.setInvoice(invoice);
+        }
+
+
         if (InventoryTransaction.TransactionType.IN == request.getTransactionType()
                 || InventoryTransaction.TransactionType.SUPPLIER_RETURN ==  request.getTransactionType()) {
 
@@ -134,6 +148,9 @@ public class InventoryTransactionService {
 
             if (newStockQuantity < 0) {
                 throw new NotEnoughStockQuantityException ("Not Enough Stock Quantity");
+            }
+            if(newStockQuantity == 0 ){
+                product.setStatus(Product.Status.INACTIVE);
             }
             if (newStockQuantity < product.getMinStockLevel()) {
 

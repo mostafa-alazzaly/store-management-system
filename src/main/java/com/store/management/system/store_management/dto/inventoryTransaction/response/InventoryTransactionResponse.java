@@ -11,6 +11,7 @@ public class InventoryTransactionResponse {
     private int id;
     private Integer employeeId;
     private Integer supplierId;
+    private Integer invoiceId;
     private InventoryTransaction.TransactionType transactionType;
     private LocalDate transactionDate;
     private String notes ;
@@ -19,6 +20,14 @@ public class InventoryTransactionResponse {
     private List<InventoryTransactionItemResponse> items ;
     private String message;
     private List<String> warnings;
+
+    public Integer getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(Integer invoiceId) {
+        this.invoiceId = invoiceId;
+    }
 
     public String getMessage() {
         return message;
